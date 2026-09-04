@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lojinha do França</title>
+
+<style>
+body{
+  margin:0;
+  background:#0f172a;
+  color:white;
+  font-family:Arial,sans-serif;
+}
+header{
+  background:#111827;
+  text-align:center;
+  padding:25px;
+}
+header h1{margin:0;color:#22c55e;}
+.banner{
+  background:linear-gradient(135deg,#22c55e,#15803d);
+  margin:15px;
+  padding:20px;
+  border-radius:18px;
+  text-align:center;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+  padding:15px;
+}
+.card{
+  background:#1f2937;
+  border-radius:15px;
+  padding:15px;
+  text-align:center;
+}
+.price{
+  color:#4ade80;
+  font-size:22px;
+  font-weight:bold;
+  margin:10px 0;
+}
+button{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#22c55e;
+  color:white;
+  font-size:16px;
+}
+#checkout{
+  display:none;
+  padding:20px;
+}
+input{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:8px;
+  border:1px solid #334155;
+  background:#111827;
+  color:white;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🌾 Lojinha do França</h1>
+<p>Hay Day Premium</p>
+</header>
+
+<div class="banner">
+<h2>Entrega rápida</h2>
+<p>Escolha seu kit e faça seu pedido.</p>
+</div>
+
+<div id="shop" class="grid"></div>
+
+<div id="checkout">
+<h2>Finalizar Pedido</h2>
+
+<input id="nome" placeholder="Nome">
+<input id="zap" placeholder="WhatsApp">
+<input id="tag" placeholder="Tag do Hay Day">
+
+<p id="info"></p>
+
+<button onclick="finalizar()">Confirmar Pedido</button>
+</div>
+
+<script>
+const produtos=[
+["Kit Silo",0.99],
+["Kit Terra",23.80],
+["Produções",55.00]
+];
+
+let atual=null;
+const shop=document.getElementById("shop");
+
+produtos.forEach(p=>{
+shop.innerHTML+=`
+<div class="card">
+<h3>${p[0]}</h3>
+<div class="price">R$ ${p[1].toFixed(2).replace(".",",")}</div>
+<button onclick="comprar('${p[0]}',${p[1]})">Comprar</button>
+</div>`;
+});
+
+function comprar(nome,valor){
+atual={nome,valor};
+shop.style.display="none";
+checkout.style.display="block";
+info.innerHTML=`Produto: <b>${nome}</b><br>Total: <b>R$ ${valor.toFixed(2).replace(".",",")}</b>`;
+}
+
+function finalizar(){
+const pedido=Math.floor(Math.random()*9000+1000);
+
+document.body.innerHTML=`
+<header><h1>Pedido Confirmado 🎉</h1></header>
+<div style="padding:20px">
+<h2>Pedido #${pedido}</h2>
+<p><b>Produto:</b> ${atual.nome}</p>
+<p><b>Valor:</b> R$ ${atual.valor.toFixed(2).replace(".",",")}</p>
+<p><b>Cliente:</b> ${nome.value}</p>
+<p><b>WhatsApp:</b> ${zap.value}</p>
+<p><b>Tag:</b> ${tag.value}</p>
+</div>`;
+}
+</script>
+
+</body>
+</html>
